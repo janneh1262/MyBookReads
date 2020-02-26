@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom'
 import Searchbutton from './SearchButton'
 
 
-function ListBooks(props) {
+function MyBooks(props) {
 
     const { onShelfChange } = props;
 
-    const myCurrentreadings = props.books.filter((book) => book.shelf === 'currentlyReading')
+    const currentlyReading = props.books.filter((book) => book.shelf === 'currentlyReading')
     const wantToRead = props.books.filter((book) => book.shelf === 'wantToRead')
     const read = props.books.filter((book) => book.shelf === 'read')
 
@@ -19,7 +19,7 @@ function ListBooks(props) {
                 <div>
                     <BookShelf
                         bookshelfTitle='Currently Reading'
-                        bookshelfBooks={myCurrentreadings}
+                        bookshelfBooks={currentlyReading}
                         onShelfChange={onShelfChange}
 
                     />
@@ -39,4 +39,4 @@ function ListBooks(props) {
         </div>
     )
 }
-export default ListBooks
+export default MyBooks

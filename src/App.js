@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
-import MyBookLookUp from './components/MyBookLookUp'
-import MyBooks from './components/MyBooks'
+import SearchBooks from './components/MyBookLookUp'
+import ListBooks from './components/MyBooks'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 
@@ -10,24 +10,21 @@ class BooksApp extends React.Component {
     books: []
   }
 
-  //API call to get the books that are on the shelfs
+
   componentDidMount() {
     BooksAPI
       .getAll()
       .then(books => {
         this.setState({ books })
-        //console.log(books);
       })
   }
-
 
   onShelfChange = (book, shelf) => {
     book.shelf = shelf
     this.setState(state => ({
       books: state
         .books
-        // .filter(b => b.id !== book.id)
-
+        .filter(b => b.id !== book.id)
         .concat([book])
     }))
     BooksAPI.update(book, shelf)
@@ -37,17 +34,24 @@ class BooksApp extends React.Component {
 
     return (
       <div className="app">
-        <Route path="/" exact render={() => (
-          <div>
-            <div className="list-books-title">
-              <h1>MyReads</h1>
+        <Route
+          path="/"
+          exact
+          render={() => (
+            <div>
+              <div className="list-books-title">
+                <h1>MyReads</h1>
+              </div>
+              <ListBooks books={this.state.books} onShelfChange={this.onShelfChange} />
             </div>
-            <MyBooks books={this.state.books} onShelfChange={this.onShelfChange} />
-          </div>
-        )} />
+          )} />
 
-        <Route path="/search" render={({ history }) => (
-          <MyBookLookUp onShelfChange={this.onShelfChange} history={history} books={this.state.books} />)} />
+        <Route
+          path="/search"
+          render={({ history }) => (<SearchBooks
+            onShelfChange={this.onShelfChange}
+            history={history}
+            books={this.state.books} />)} />
       </div>
     )
   }

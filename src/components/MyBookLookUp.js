@@ -54,7 +54,7 @@ class MyBookLookUp extends React.Component {
                             type="text"
                             minLength={2}
                             placeholder="Search by Author or by Book Title"
-                            debounceTimeout={300}
+                            debounceTimeout={325}
                             onChange={this.search} />
                     </div>
                 </div>
